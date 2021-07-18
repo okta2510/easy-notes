@@ -1,18 +1,6 @@
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'eyJhbGciOiJIUz';
-const users = [
-    {
-        username: 'admin',
-        password: 'admin',
-        role: 'admin'
-    }, {
-        username: 'anna',
-        password: 'password123member',
-        role: 'member'
-    }
-];
-
 const books = [
   {
       "author": "Chinua Achebe",
@@ -78,30 +66,6 @@ module.exports = (app) => {
 
   // Delete a Note with noteId
   app.delete('/notes/:noteId', notes.delete);
-  
-  // Create a new user
-  app.post('/registration', registrations.create);
-
-  app.get('/user', registrations.findAll);
-
-  app.post('/login', (req, res) => {
-    // Read username and password from request body
-    const { username, password } = req.body;
-
-    // Filter user from the users array by username and password
-    const user = users.find(u => { return u.username === username && u.password === password });
-
-    if (user) {
-        // Generate an access token
-        const accessToken = jwt.sign({ username: user.username,  role: user.role }, accessTokenSecret);
-
-        res.json({
-            accessToken
-        });
-    } else {
-        res.send('Username or password incorrect');
-    }
-  });
 
   app.get('/books',authenticateJWT, (req, res) => {
     res.json(books);
