@@ -1,3 +1,8 @@
+# About The App
+```
+node server.js --trace-warnings
+```
+
 <img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" width="256"> <img src="https://brew.sh/assets/img/homebrew-256x256.png" height="72">
 
 # The MongoDB Homebrew Tap
