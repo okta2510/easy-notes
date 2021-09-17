@@ -1,4 +1,5 @@
-
+const Registration = require('../models/registration.model.js');
+const bcrypt = require('bcrypt');
 const users = [
   {
       username: 'admin',
@@ -11,6 +12,25 @@ const users = [
   }
 ];
 
+const checkUserExisted = async (req, res, next) => {
+  const { username, password } = req.body;
+  const salt = await bcrypt.genSalt()
+  const hashedPassword = await bcrypt.hash(password, salt)
+  Registration.find()
+  .then(registration => {
+      const user = registration.find(u => { return u.username === username || u.password === hashedPassword });
+      if(!user) {
+        next()
+      } else {
+        res.status(502).send({message: "user already exist"})
+      }
+      
+  }).catch(err => {
+      res.status(500).send({
+          message: err.message || "Some error occurred while retrieving registrations."
+      });
+  });
+}
 
 module.exports = (app) => {
   const registrations = require('../controllers/registration.controller.js');
@@ -26,11 +46,24 @@ module.exports = (app) => {
 
   // Create a new user
   app.post('/user/registration', registrations.create);
+  
+  app.post('/user/registration/encrypt', [checkUserExisted], async (req, res) => {
+    try {
+      const salt = await bcrypt.genSalt()
+      // by default by 10
+      const hashedPassword = await bcrypt.hash(req.body.password, salt)
+      const user = {username: req.body.username, password: hashedPassword, role: 'member'}
+      const newReq = {...req, ...{body: user}};
+      registrations.create({body: user}, res)
+    } catch(err) {
+      console.log(err)
+      res.status(500).send()
+    }
+  });
 
   app.post('/login', (req, res) => {
     // Read username and password from request body
     const { username, password } = req.body;
-    console.log(req.body)
     var jwt = require("jsonwebtoken");
     // Filter user from the users array by username and password
     const user = users.find(u => { return u.username === username && u.password === password });

@@ -72,6 +72,8 @@ Alternatively, you can install a specific version of the MongoDB Server if desir
    $ brew install mongodb-community@3.6
    ```
 
+
+
 ## Default Paths for the mongodb-community Formula
 
 In addition to installing the MongoDB server and tool binaries, the `mongodb-community` formula creates:
@@ -79,6 +81,8 @@ In addition to installing the MongoDB server and tool binaries, the `mongodb-com
  * a configuration file: `/usr/local/etc/mongod.conf`
  * a log directory path: `/usr/local/var/log/mongodb`
  * a data directory path: `/usr/local/var/mongodb`
+
+
 
 ## Starting the mongodb-community Server
 
@@ -123,6 +127,8 @@ Note that this does not uninstall the bundled Database Tools. To uninstall the D
 ```
 $ brew uninstall mongodb-database-tools
 ```
+
+
 
 ## The Documentation
 

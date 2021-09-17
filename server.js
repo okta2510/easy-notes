@@ -1,17 +1,26 @@
+const formData = require("express-form-data");
+const os = require("os");
+// above : convert json to form data
 const express = require('express');
 const bodyParser = require('body-parser');
-// Configuring the database
+// below : Configuring the database
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
 // create express app
 const app = express();
 
+// parse requests of content-type - application/json
+app.use(bodyParser.json())
+
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// parse requests of content-type - application/json
-app.use(bodyParser.json())
+const options = {
+    uploadDir: os.tmpdir(),
+    autoClean: true
+  };
+app.use(formData.parse(options));  
 
 
 mongoose.Promise = global.Promise;

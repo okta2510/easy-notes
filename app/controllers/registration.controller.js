@@ -3,16 +3,11 @@ const Registration = require('../models/registration.model.js');
 // Create and Save a new Note
 exports.create = (req, res) => {
   // Validate request
-  if(!req.body.username || !req.body.password ) {
-      return res.status(400).send({
-          message: "Registration username/password can not be empty"
-      });
-  }
-
   // Create a Note
   const registration = new Registration({
       username: req.body.username, 
-      password: req.body.password
+      password: req.body.password,
+      role: 'member'
   });
 
   // Save Note in the database

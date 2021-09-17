@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const RegistrationSchema = mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    role: String
 }, {
     timestamps: true
 });
