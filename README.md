@@ -154,3 +154,12 @@ brew services start mongodb-community@4.4
 
 ###Stop mongodb
 brew services stop mongodb-community@4.4
+
+
+## using docker
+
+https://hub.docker.com/_/mongo
+
+```
+docker pull mongo
+```
